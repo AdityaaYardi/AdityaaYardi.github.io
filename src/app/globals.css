@@ -1,0 +1,778 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Design tokens
+   Light neutral ground, near-black ink and one orange accent (taken from the
+   reference moodboard). The interface stays neutral; colour comes from the
+   project pictures and the accent marks the one main action.
+--------------------------------------------------------------------------- */
+@theme {
+  --color-bg: #f0f0ee;
+  --color-surface: #e3e3e1;
+  --color-ink: #0e0e0e;
+  --color-muted: #5c5c5a;
+  --color-accent: #ec4610;
+  --color-line: rgb(14 14 14 / 0.14);
+  --color-line-strong: rgb(14 14 14 / 0.34);
+
+  --font-sans: var(--font-work-sans), system-ui, sans-serif;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+
+  --ease-ui: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-enter: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root {
+  --nav: 72px;
+  --gut: 80px;
+  --padt: 120px;
+  --padb: 72px;
+  --m-in: 150ms;
+  --m-out: 120ms;
+  --m-press: 90ms;
+}
+
+@media (max-width: 1023px) {
+  :root {
+    --gut: 48px;
+  }
+}
+
+@media (max-width: 639px) {
+  :root {
+    --nav: 56px;
+    --gut: 24px;
+    --padt: 96px;
+    --padb: 48px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Base
+--------------------------------------------------------------------------- */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.625;
+    font-feature-settings: "ss02", "tnum" 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background: var(--color-ink);
+    color: var(--color-bg);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Layout: one container, equal left and right edges, 12 columns
+--------------------------------------------------------------------------- */
+@layer components {
+  .wrap {
+    width: min(100% - 2 * var(--gut), 1280px);
+    margin-inline: auto;
+  }
+
+  .section {
+    padding-top: var(--padt);
+    padding-bottom: var(--padb);
+  }
+
+  .grid12 {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 24px;
+  }
+
+  @media (max-width: 639px) {
+    .grid12 {
+      column-gap: 12px;
+    }
+  }
+
+  /* Type scale: size and tight tracking carry the headlines, never weight */
+  .t-h1 {
+    font-size: clamp(36px, 4.3vw, 62px);
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+    font-weight: 500;
+  }
+
+  .t-h1-page {
+    font-size: clamp(34px, 4vw, 56px);
+    line-height: 1.05;
+    letter-spacing: -0.032em;
+    font-weight: 500;
+  }
+
+  .t-h2 {
+    font-size: clamp(30px, 3.4vw, 48px);
+    line-height: 1.08;
+    letter-spacing: -0.028em;
+    font-weight: 500;
+  }
+
+  .t-h3 {
+    font-size: clamp(22px, 2vw, 28px);
+    line-height: 1.18;
+    letter-spacing: -0.02em;
+    font-weight: 500;
+  }
+
+  .t-title {
+    font-size: clamp(18px, 1.4vw, 20px);
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    font-weight: 500;
+  }
+
+  .t-lead {
+    font-size: clamp(18px, 1.4vw, 20px);
+    line-height: 1.5;
+  }
+
+  .t-label {
+    font-size: 13px;
+    line-height: 1.25;
+    font-weight: 500;
+    color: var(--color-muted);
+  }
+
+  .t-small {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .measure {
+    max-width: 62ch;
+  }
+
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* -------------------------------------------------------------------------
+     Buttons: one filled primary, one outlined secondary
+  ------------------------------------------------------------------------- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    height: 44px;
+    padding: 0 24px;
+    border-radius: var(--radius-sm);
+    border: 1px solid transparent;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+      transform var(--m-out) var(--ease-ui),
+      background-color var(--m-out) var(--ease-ui),
+      border-color var(--m-out) var(--ease-ui);
+  }
+
+  .btn--primary {
+    background: var(--color-accent);
+    color: var(--color-ink);
+  }
+
+  .btn--secondary {
+    border-color: var(--color-line-strong);
+    color: var(--color-ink);
+  }
+
+  .btn--xl {
+    height: 88px;
+    width: 100%;
+    justify-content: space-between;
+    padding: 0 32px;
+    border-radius: var(--radius-md);
+    font-size: clamp(22px, 2.4vw, 32px);
+    letter-spacing: -0.02em;
+  }
+
+  .btn:active {
+    transform: translateY(1px) scale(0.985);
+    transition-duration: var(--m-press);
+  }
+
+  .arrow {
+    width: 1em;
+    height: 1em;
+    flex: none;
+    transition: transform var(--m-out) var(--ease-ui);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .btn:hover {
+      transform: translateY(-1px);
+      transition-duration: var(--m-in);
+    }
+
+    .btn--xl:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn--primary:hover {
+      background: color-mix(in srgb, var(--color-accent) 86%, var(--color-ink));
+    }
+
+    .btn--secondary:hover {
+      background: rgb(14 14 14 / 0.05);
+      border-color: var(--color-ink);
+    }
+
+    .btn:hover:active {
+      transform: translateY(1px) scale(0.985);
+      transition-duration: var(--m-press);
+    }
+
+    .btn:hover .arrow,
+    .link:hover .arrow,
+    .card:hover .arrow {
+      transform: translateX(3px);
+      transition-duration: var(--m-in);
+    }
+  }
+
+  /* -------------------------------------------------------------------------
+     Links: a faint hairline at rest, an ink line draws left to right
+  ------------------------------------------------------------------------- */
+  .link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    background-image:
+      linear-gradient(var(--color-ink), var(--color-ink)),
+      linear-gradient(var(--color-line-strong), var(--color-line-strong));
+    background-repeat: no-repeat;
+    background-position:
+      0 100%,
+      0 100%;
+    background-size:
+      0% 1px,
+      100% 1px;
+    padding-bottom: 3px;
+    transition: background-size var(--m-out) var(--ease-ui);
+  }
+
+  .navlink {
+    position: relative;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--color-ink);
+    padding: 12px 0;
+  }
+
+  .navlink::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 8px;
+    height: 1px;
+    background: var(--color-ink);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--m-out) var(--ease-ui);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .link:hover,
+    .card:hover .link {
+      background-size:
+        100% 1px,
+        100% 1px;
+      transition-duration: var(--m-in);
+    }
+
+    .navlink:hover::after {
+      transform: scaleX(1);
+      transition-duration: var(--m-in);
+    }
+  }
+
+  .navlink:focus-visible::after {
+    transform: scaleX(1);
+  }
+
+  /* -------------------------------------------------------------------------
+     Chips, rows, cards
+  ------------------------------------------------------------------------- */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    height: 28px;
+    padding: 0 10px;
+    border: 1px solid var(--color-line);
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .rule-t {
+    border-top: 1px solid var(--color-line);
+  }
+
+  .rule-b {
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-lg);
+    background: var(--color-bg);
+    overflow: hidden;
+    transition:
+      transform var(--m-out) var(--ease-ui),
+      border-color var(--m-out) var(--ease-ui),
+      box-shadow var(--m-out) var(--ease-ui);
+  }
+
+  /* The whole card is the link target; the title carries the link itself */
+  .card__link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .card__link:focus-visible {
+    outline: none;
+  }
+
+  .card:has(.card__link:focus-visible) {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  .panel {
+    background: var(--color-surface);
+    border-radius: var(--radius-md);
+  }
+
+  .frame {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    background: #2c2c2c;
+  }
+
+  .frame img,
+  .zoom img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 400ms var(--ease-ui);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .card--linked:hover {
+      transform: translateY(-2px);
+      border-color: var(--color-line-strong);
+      box-shadow: 0 10px 24px rgb(14 14 14 / 0.08);
+      transition-duration: 180ms;
+    }
+
+    .card--linked:hover .zoom img {
+      transform: scale(1.03);
+      transition-duration: 600ms;
+    }
+  }
+
+  /* -------------------------------------------------------------------------
+     Fixed header
+  ------------------------------------------------------------------------- */
+  .nav {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 20;
+    height: var(--nav);
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .skip-link {
+    position: absolute;
+    left: var(--gut);
+    top: 12px;
+    z-index: 30;
+    padding: 10px 16px;
+    background: var(--color-ink);
+    color: var(--color-bg);
+    border-radius: var(--radius-sm);
+    font-weight: 500;
+    transform: translateY(-200%);
+  }
+
+  .skip-link:focus-visible {
+    transform: none;
+  }
+
+  .mark {
+    display: inline-grid;
+    grid-template-columns: repeat(2, 6px);
+    gap: 3px;
+  }
+
+  .mark i {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-ink);
+  }
+
+  .mark i:nth-child(2) {
+    background: var(--color-accent);
+  }
+
+  /* -------------------------------------------------------------------------
+     Hero: exactly the first screen on desktop
+  ------------------------------------------------------------------------- */
+  .hero {
+    display: flex;
+    flex-direction: column;
+    min-height: 100svh;
+    padding-top: calc(var(--nav) + 32px);
+    padding-bottom: 24px;
+  }
+
+  /* Stacked: the words take what they need, the picture fills the rest of the screen */
+  .hero__grid {
+    flex: 1;
+    grid-template-rows: auto minmax(180px, 1fr);
+    row-gap: 24px;
+  }
+
+  @media (min-width: 1024px) {
+    .hero {
+      height: 100svh;
+      min-height: 640px;
+      max-height: 1080px;
+      padding-top: 120px;
+      padding-bottom: 64px;
+    }
+
+    .hero__grid {
+      grid-template-rows: minmax(0, 1fr);
+    }
+  }
+
+  /* -------------------------------------------------------------------------
+     Statement moment: the sentence rests at half ink and turns to ink word by
+     word as it crosses the middle of the screen. --p is written by Statement.tsx;
+     without script or under reduced motion it stays 1 (fully lit).
+  ------------------------------------------------------------------------- */
+  .statement {
+    --p: 1;
+    font-size: clamp(34px, 5.4vw, 80px);
+    line-height: 1.06;
+    letter-spacing: -0.032em;
+    font-weight: 500;
+  }
+
+  .statement__word {
+    --w: clamp(0, calc(var(--p) * var(--n) - var(--i)), 1);
+    color: color-mix(
+      in srgb,
+      var(--tone, var(--color-ink)) calc(var(--w) * 100%),
+      rgb(14 14 14 / 0.55)
+    );
+  }
+
+  /* -------------------------------------------------------------------------
+     Diagrams: nodes in columns joined by hairlines. A pulse runs along the
+     lines while the diagram's card is hovered or focused; at rest it is still.
+  ------------------------------------------------------------------------- */
+  .dg {
+    container-type: inline-size;
+    width: 100%;
+  }
+
+  .dg__flow {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .dg__col {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .dg__node {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+    min-height: 56px;
+    padding: 10px 12px;
+    border: 1px solid var(--color-line-strong);
+    border-radius: var(--radius-sm);
+    background: var(--color-bg);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.25;
+  }
+
+  .dg__node small {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--color-muted);
+  }
+
+  .dg__node--main {
+    background: var(--color-ink);
+    border-color: var(--color-ink);
+    color: var(--color-bg);
+  }
+
+  .dg__node--main small {
+    color: rgb(240 240 238 / 0.72);
+  }
+
+  .dg__wire {
+    flex: 0 0 clamp(20px, 5cqw, 44px);
+    align-self: stretch;
+    width: clamp(20px, 5cqw, 44px);
+    height: auto;
+    overflow: visible;
+  }
+
+  .dg__wire--v {
+    display: none;
+  }
+
+  .dg__wire path {
+    fill: none;
+    stroke: var(--color-line-strong);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .dg__wire path.dg__pulse {
+    stroke: var(--color-accent);
+    stroke-width: 2;
+    stroke-dasharray: 28 72;
+    stroke-dashoffset: 100;
+    opacity: 0;
+  }
+
+  /* Narrow container: the flow runs top to bottom, one row per step */
+  @container (max-width: 599px) {
+    .dg__flow {
+      flex-direction: column;
+    }
+
+    .dg__col {
+      flex: 0 0 auto;
+      flex-direction: row;
+    }
+
+    .dg__col > .dg__node {
+      flex: 1 1 0;
+      min-width: 0;
+    }
+
+    .dg__col > .dg__node:only-child {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 44px;
+    }
+
+    .dg__col > .dg__node:only-child small {
+      text-align: right;
+    }
+
+    .dg__wire--h {
+      display: none;
+    }
+
+    .dg__wire--v {
+      display: block;
+      flex: 0 0 20px;
+      width: 100%;
+      height: 20px;
+    }
+  }
+
+  /* Coil figure */
+  .coil__turn {
+    fill: none;
+    stroke: var(--color-line-strong);
+    stroke-width: 1;
+  }
+
+  .coil__path {
+    fill: none;
+    stroke: var(--color-ink);
+    stroke-width: 1.5;
+  }
+
+  .coil__way {
+    fill: var(--color-surface);
+    stroke: var(--color-ink);
+    stroke-width: 1;
+  }
+
+  .coil__tool {
+    fill: var(--color-accent);
+    offset-rotate: 0deg;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Motion
+   Three places only: the hero's entrance on load, the statement moment, and
+   the hover and press layer above. Nothing fades in on scroll.
+--------------------------------------------------------------------------- */
+@keyframes rise {
+  from {
+    transform: translateY(105%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes settle {
+  from {
+    transform: scale(1.05);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes pulse-run {
+  from {
+    stroke-dashoffset: 100;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes tool-run {
+  from {
+    offset-distance: 0%;
+  }
+  to {
+    offset-distance: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .enter-mask {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+    padding-bottom: 0.12em;
+    margin-bottom: -0.12em;
+  }
+
+  .enter-word {
+    display: inline-block;
+    animation: rise 700ms var(--ease-enter) both;
+    animation-delay: calc(var(--i, 0) * 60ms);
+  }
+
+  .enter-fade {
+    animation: fade-up 520ms var(--ease-enter) both;
+    animation-delay: calc(360ms + var(--i, 0) * 60ms);
+  }
+
+  .enter-settle {
+    animation: settle 1100ms var(--ease-enter) both;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .card:hover .dg__pulse,
+    .dg-host:hover .dg__pulse {
+      opacity: 1;
+      animation: pulse-run 3.2s linear infinite;
+    }
+
+    .card:hover .coil__tool,
+    .dg-host:hover .coil__tool {
+      animation: tool-run 3.2s linear infinite;
+    }
+  }
+
+  .card:focus-within .dg__pulse {
+    opacity: 1;
+    animation: pulse-run 3.2s linear infinite;
+  }
+
+  .card:focus-within .coil__tool {
+    animation: tool-run 3.2s linear infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
