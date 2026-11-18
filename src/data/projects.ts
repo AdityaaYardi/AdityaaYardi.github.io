@@ -368,14 +368,14 @@ export const projects: Project[] = [
   },
   {
     slug: "two-arm-chess-cell",
-    title: "Two robot arms at one chessboard",
+    title: "Two LeRobot SO-101 arms at one chessboard",
     kicker: "Simulation study",
     period: "",
-    summary: "Two robot arms, R2 and D2, face each other across a chessboard in simulation.",
-    tags: ["Simulation", "Two-arm cell"],
+    summary: "Two LeRobot SO-101 arms, R2 and D2, face each other across a chessboard in simulation.",
+    tags: ["LeRobot SO-101", "Simulation", "Two-arm cell"],
     image: {
       src: "/images/chess-cell-perspective.png",
-      alt: "Simulation of a yellow and a blue robot arm on pedestals, facing each other across a chessboard with all pieces set up",
+      alt: "Simulation of a yellow and a blue LeRobot SO-101 arm on pedestals, facing each other across a chessboard with all pieces set up",
       width: 987,
       height: 613,
       kind: "Simulation",

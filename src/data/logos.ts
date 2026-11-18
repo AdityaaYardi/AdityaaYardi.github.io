@@ -14,6 +14,8 @@ export type Logo = {
   src: string;
   kind: "mark" | "wordmark";
   ratio: number;
+  /** Height on an organisation plate, for logos whose drawing leaves a lot of empty space. */
+  plate?: number;
 };
 
 const L = (file: string, kind: Logo["kind"], ratio: number): Logo => ({
@@ -54,6 +56,8 @@ const tools: Record<string, Logo> = {
   Ansys: L("ansys.svg", "wordmark", 3.22),
   // AI
   "Model Context Protocol (MCP)": L("mcp.svg", "mark", 0.92),
+  // Robots (LeRobot is a Hugging Face project)
+  "LeRobot SO-101": L("hugging-face.svg", "mark", 1.08),
 };
 
 /** Organisations, keyed by the names used in the data files. */
@@ -63,6 +67,10 @@ const orgs: Record<string, Logo> = {
   "Schaeffler AG": L("schaeffler.svg", "wordmark", 8.94),
   "McKinsey & Company": L("mckinsey.svg", "wordmark", 8),
   "Google / Coursera": L("google.svg", "mark", 0.98),
+  // Supplied by Aditya (Penta, CAD infield); ADSS is a generic mark with the name, not the company's own logo.
+  "Penta Designers & Engineers Pvt. Ltd.": L("penta.png", "wordmark", 2.6),
+  "CAD infield Technologies": { ...L("cad-infield.png", "wordmark", 2.13), plate: 48 },
+  ADSS: L("adss.svg", "wordmark", 3.13),
 };
 
 export function toolLogo(name: string): Logo | undefined {

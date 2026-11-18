@@ -26,7 +26,7 @@ export function LogoImg({
       height={height}
       loading="lazy"
       decoding="async"
-      className={`block flex-none ${className}`}
+      className={`block flex-none object-contain ${className}`}
       style={{ height, width: "auto" }}
     />
   );
@@ -50,7 +50,13 @@ export function OrgPlate({
   return (
     <span className={`logo-plate ${className}`}>
       {logo ? (
-        <LogoImg logo={logo} height={logo.kind === "wordmark" ? 22 : 30} label={name} className="max-w-full" />
+        // Fit the plate's 132px content width; tall logos stop at 34px so none outweighs the others.
+        <LogoImg
+          logo={logo}
+          height={logo.plate ?? Math.min(logo.kind === "wordmark" ? 34 : 30, Math.floor(132 / logo.ratio))}
+          label={name}
+          className="max-w-full"
+        />
       ) : (
         <span className="logo-plate__type" aria-label={name}>
           {short ?? name}
