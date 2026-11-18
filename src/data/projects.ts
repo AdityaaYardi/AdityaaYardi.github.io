@@ -23,6 +23,8 @@ export type Project = {
   slug: string;
   title: string;
   kicker: string;
+  /** Organisation the work was done for; its logo shows on the case-study page. */
+  org?: string;
   period: string;
   status?: string;
   summary: string;
@@ -48,6 +50,7 @@ export const projects: Project[] = [
     slug: "coil-winding-path-planning",
     title: "Robot path planning for non-planar coil winding",
     kicker: "Project thesis · Institute FAPS, FAU",
+    org: "Institute FAPS, FAU",
     period: "Jun 2025 – Nov 2025",
     summary:
       "A Python and PythonOCC pipeline that generates collision-free robot trajectories directly from FreeCAD coil geometry.",
@@ -133,6 +136,7 @@ export const projects: Project[] = [
     slug: "ur10e-motion-control",
     title: "ROS 2 motion planning and control for a UR10e",
     kicker: "Master's thesis · Institute FAPS, FAU",
+    org: "Institute FAPS, FAU",
     period: "Jan 2026 – present",
     status: "In progress",
     summary:
@@ -216,6 +220,7 @@ export const projects: Project[] = [
     slug: "smart-turning",
     title: "Tool-wear monitoring from live CNC data",
     kicker: "Working student · Schaeffler AG",
+    org: "Schaeffler AG",
     period: "May 2025 – present",
     status: "Ongoing",
     summary:
@@ -295,7 +300,7 @@ export const projects: Project[] = [
     period: "Jun 2021 – Jun 2022",
     summary:
       "Redesigned jigs and fixtures cut $1,000 to $1,500 per production batch and about 20 man-hours per cycle while holding tolerance.",
-    tags: ["SOLIDWORKS", "Creo", "CATIA V5", "Ansys FEA", "GD&T"],
+    tags: ["SOLIDWORKS", "Creo", "CATIA V5", "Ansys", "GD&T"],
     diagram: {
       label:
         "Design process: concept, 3D model, motion analysis, FEA in Ansys, then technical documentation with GD&T callouts",
@@ -357,7 +362,7 @@ export const projects: Project[] = [
     ],
     tools: [
       { group: "CAD", items: ["SOLIDWORKS", "Creo", "CATIA V5"] },
-      { group: "CAE", items: ["Ansys FEA", "Motion analysis"] },
+      { group: "CAE", items: ["Ansys", "FEA", "Motion analysis"] },
       { group: "Standards", items: ["GD&T", "Design for manufacturing"] },
     ],
   },

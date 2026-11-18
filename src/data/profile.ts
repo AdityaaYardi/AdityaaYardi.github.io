@@ -5,6 +5,8 @@ export type Role = {
   current?: boolean;
   title: string;
   org: string;
+  /** Set in type on the logo plate when no logo file exists. */
+  short?: string;
   place: string;
   summary: string;
   tags: string[];
@@ -53,6 +55,7 @@ export const experience: Role[] = [
     period: "Jun 2021 – Jun 2022",
     title: "Mechanical design engineer",
     org: "Penta Designers & Engineers Pvt. Ltd.",
+    short: "Penta Designers & Engineers",
     place: "Pune, India",
     summary:
       "Designed jigs, fixtures and custom assemblies from concept to GD&T documentation. The redesigns cut $1,000 to $1,500 per production batch and about 20 man-hours per cycle within tolerance.",
@@ -62,6 +65,7 @@ export const experience: Role[] = [
     period: "Jun 2021 – Dec 2021",
     title: "Engineering intern",
     org: "CAD infield Technologies",
+    short: "CAD infield",
     place: "Pune, India",
     summary:
       "Produced 50+ production-ready technical drawings and bills of materials in CATIA V5 to GD&T standards, and supported prototype development for automotive and mechatronics components.",
@@ -97,7 +101,7 @@ export const skills: SkillGroup[] = [
   {
     name: "Programming and data",
     basis: "Used at FAPS and Schaeffler",
-    items: ["Python", "PythonOCC", "MATLAB", "Simulink", "Power BI", "Git"],
+    items: ["Python", "PythonOCC", "MATLAB", "Simulink", "Power BI", "Git", "Microsoft Office 365"],
   },
   {
     name: "Mechanical design, CAD and CAE",
@@ -108,7 +112,8 @@ export const skills: SkillGroup[] = [
       "CATIA V5",
       "Autodesk Inventor",
       "FreeCAD",
-      "Ansys FEA",
+      "Ansys",
+      "FEA",
       "GD&T",
       "Design for manufacturing",
     ],
@@ -143,6 +148,7 @@ export const degrees = [
   {
     degree: "M.Sc. Electromobility",
     school: "Friedrich-Alexander-Universität Erlangen-Nürnberg (FAU)",
+    short: "FAU",
     place: "Germany",
     period: "Expected 2026",
     detail:
@@ -152,6 +158,7 @@ export const degrees = [
   {
     degree: "B.E. Mechanical Engineering",
     school: "Savitribai Phule Pune University",
+    short: "SPPU",
     place: "India",
     period: "2017 – 2021",
     detail:

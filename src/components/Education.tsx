@@ -1,4 +1,6 @@
+import { orgLogo } from "@/data/logos";
 import { certificates, degrees, languages } from "@/data/profile";
+import { LogoImg, OrgPlate } from "./Logo";
 import { SectionHead } from "./ui";
 
 export function Education() {
@@ -10,7 +12,10 @@ export function Education() {
         <ul className="grid grid-cols-1 gap-6 md:grid-cols-2">
           {degrees.map((item) => (
             <li key={item.degree} className="panel flex flex-col rounded-[20px] p-6 sm:p-8">
-              <p className="t-label tnum">{item.period}</p>
+              <div className="flex items-start justify-between gap-4">
+                <p className="t-label tnum pt-1">{item.period}</p>
+                <OrgPlate logo={orgLogo(item.school)} name={item.school} short={item.short} />
+              </div>
               <h3 className="t-h3 mt-4">{item.degree}</h3>
               <p className="mt-2 text-muted">
                 {item.school}, {item.place}
@@ -28,15 +33,29 @@ export function Education() {
           <div className="col-span-12 lg:col-span-7">
             <h3 className="t-title pb-4">Certificates and programmes</h3>
             <ul>
-              {certificates.map((item) => (
-                <li key={item.name} className="rule-t flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 py-4">
-                  <span>
-                    <span className="font-medium">{item.name}</span>
-                    <span className="text-muted"> · {item.issuer}</span>
-                  </span>
-                  {item.date ? <span className="t-label tnum">{item.date}</span> : null}
-                </li>
-              ))}
+              {certificates.map((item) => {
+                const logo = orgLogo(item.issuer);
+                return (
+                  <li key={item.name} className="rule-t flex items-center gap-4 py-4">
+                    <span className="flex h-8 w-[104px] flex-none items-center">
+                      {logo ? (
+                        <LogoImg logo={logo} height={logo.kind === "wordmark" ? 13 : 22} />
+                      ) : (
+                        <span className="text-[14px] font-medium leading-tight" aria-hidden="true">
+                          {item.issuer}
+                        </span>
+                      )}
+                    </span>
+                    <span className="flex grow flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+                      <span>
+                        <span className="font-medium">{item.name}</span>
+                        <span className="text-muted"> · {item.issuer}</span>
+                      </span>
+                      {item.date ? <span className="t-label tnum">{item.date}</span> : null}
+                    </span>
+                  </li>
+                );
+              })}
             </ul>
           </div>
           <div className="col-span-12 lg:col-span-4 lg:col-start-9">

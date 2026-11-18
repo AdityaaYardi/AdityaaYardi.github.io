@@ -1,6 +1,8 @@
 import { Fragment, type CSSProperties } from "react";
 import { featured } from "@/data/projects";
 import { mailto, site } from "@/data/site";
+import { socialLogos } from "@/data/logos";
+import { LogoImg } from "./Logo";
 import { Arrow } from "./ui";
 
 const headline = "Mechanical engineer moving robots with ROS 2";
@@ -62,12 +64,14 @@ export function Hero() {
           >
             <li>
               <a href={site.linkedin} className="link" target="_blank" rel="noreferrer">
+                <LogoImg logo={socialLogos.linkedin} height={16} />
                 LinkedIn <Arrow direction="up-right" />
               </a>
             </li>
             {site.github ? (
               <li>
                 <a href={site.github} className="link" target="_blank" rel="noreferrer">
+                  <LogoImg logo={socialLogos.github} height={16} />
                   GitHub <Arrow direction="up-right" />
                 </a>
               </li>

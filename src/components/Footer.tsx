@@ -77,7 +77,10 @@ export function Footer() {
           </div>
         </div>
 
-        <p className="rule-t t-small mt-12 pt-6 text-muted">© 2026 {site.name}</p>
+        <p className="rule-t t-small mt-12 flex flex-wrap justify-between gap-x-6 gap-y-2 pt-6 text-muted">
+          <span>© 2026 {site.name}</span>
+          <span>Product names and logos are trademarks of their owners.</span>
+        </p>
       </div>
     </footer>
   );

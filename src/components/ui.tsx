@@ -1,4 +1,6 @@
 import type { ReactNode } from "react";
+import { toolLogo } from "@/data/logos";
+import { LogoImg } from "./Logo";
 
 /** The one arrow used across the site. It moves 3px on hover (see globals.css). */
 export function Arrow({ direction = "right" }: { direction?: "right" | "up-right" | "left" }) {
@@ -24,12 +26,31 @@ export function Mark() {
   );
 }
 
+/** One tool: its logo where one exists, then the name (a wordmark stands alone). */
+export function ToolChip({ name }: { name: string }) {
+  const logo = toolLogo(name);
+  if (!logo) return <span className="chip">{name}</span>;
+  if (logo.kind === "wordmark") {
+    return (
+      <span className="chip chip--logo" title={name}>
+        <LogoImg logo={logo} height={12} label={name} />
+      </span>
+    );
+  }
+  return (
+    <span className="chip chip--logo">
+      <LogoImg logo={logo} height={16} />
+      {name}
+    </span>
+  );
+}
+
 export function Chips({ items, className = "" }: { items: string[]; className?: string }) {
   return (
     <ul className={`flex flex-wrap gap-2 ${className}`}>
       {items.map((item) => (
-        <li key={item} className="chip">
-          {item}
+        <li key={item} className="flex">
+          <ToolChip name={item} />
         </li>
       ))}
     </ul>

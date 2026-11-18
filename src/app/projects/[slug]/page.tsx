@@ -3,6 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import { CoilFigure, Diagram } from "@/components/Diagram";
+import { OrgPlate } from "@/components/Logo";
+import { orgLogo } from "@/data/logos";
 import { Arrow, Chips } from "@/components/ui";
 import { caseStudies, getProject } from "@/data/projects";
 
@@ -41,6 +43,7 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
   const project = getProject(slug);
   if (!project) notFound();
 
+  const orgLogoOf = project.org ? orgLogo(project.org) : undefined;
   const index = caseStudies.findIndex((item) => item.slug === project.slug);
   const next = caseStudies[(index + 1) % caseStudies.length];
 
@@ -53,10 +56,13 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
               <Arrow direction="left" /> All projects
             </Link>
           </p>
-          <p className="t-label tnum col-span-12 flex flex-wrap gap-x-2 pt-4">
-            <span>{project.kicker}</span>
-            <span>· {project.period}</span>
-          </p>
+          <div className="col-span-12 flex flex-wrap items-center gap-x-6 gap-y-4 pt-4">
+            {orgLogoOf ? <OrgPlate logo={orgLogoOf} name={project.org!} /> : null}
+            <p className="t-label tnum flex flex-wrap gap-x-2">
+              <span>{project.kicker}</span>
+              <span>· {project.period}</span>
+            </p>
+          </div>
           <h1 className="t-h1-page col-span-12 lg:col-span-9">{project.title}</h1>
           {project.lead ? <p className="t-lead measure col-span-12 lg:col-span-7">{project.lead}</p> : null}
 
